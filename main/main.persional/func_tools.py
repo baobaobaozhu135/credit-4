@@ -7,6 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 # xlrd excel读模块   xlwt:excel 写模块
 import xlrd
 import time
+from elems_select import Elems
 import threading
 import sys
 
@@ -17,17 +18,20 @@ class CreditFunc:
         self.user_name = "shy-jphshczhyh-lyw"
         self.password = "czyh2017"
         self.url = "https://msi.pbccrc.org.cn/html/login.html"
+        self.current_date = "2018-07-31"
         self.time_out = 30
-        #表格参数
+        # 表格参数
         self.file_path = ur"F:\征信自动录入\正常录入贷款.xlsx"
 
     # 登录网址
     def login(self):
         # 配置文件地址
-        profile_directory = r"C:\Users\LJY\AppData\Roaming\Mozilla\Firefox\Profiles\rhp7jus5.default"
-        #加载配置文件
+        # profile_directory = r"C:\Users\LJY\AppData\Roaming\Mozilla\Firefox\Profiles\rhp7jus5.default"
+        profile_directory = r"C:\Users\Administrator\AppData\Roaming\Mozilla\Firefox\Profiles\uif847ku.default"
+        # 加载配置文件
         profile = webdriver.FirefoxProfile(profile_directory)
         driver = webdriver.Firefox(profile)
+        # driver = webdriver.Firefox()
         driver.implicitly_wait(self.time_out)
         driver.get(self.url)
         driver.implicitly_wait(self.time_out)
@@ -62,7 +66,7 @@ class CreditFunc:
 
     # args:driver = driver  id:css_selector id   max_seconds:最多查找多少秒，默认20秒
     def data_is_refresh(self, driver, css_id, max_seconds=20):
-        is_display = driver.find_element_by_id(css_id).get_attribute("style")
+        is_display = driver.find_element_by_css_selector(css_id).get_attribute("style")
         if (is_display + "").find("display: none") < 0:  # display属性是none  找不到一直找 index找不到会报错
             time.sleep(1)
             max_seconds = max_seconds - 1
@@ -73,6 +77,49 @@ class CreditFunc:
         else:
             return True
 
+    def find_page_count(self, driver, css_id, taget_count):
+        page_count = driver.find_elements_by_css_selector(css_id)
+        if len(page_count) == taget_count:
+            return True
+        else:
+            time.sleep(2)
+            print len(page_count)
+            return self.find_page_count(driver, css_id, taget_count)
+
+    def page_dict_set(self, has_db, elem):
+        if has_db:
+            page_dict = {"dbxx_tab":elem.tab_2_css,
+                     "jkrxx_tab": elem.tab_3_css,
+                     "zhxx_tab": elem.tab_4_css,
+                     "hkxx_tab": elem.tab_5_css,
+                     "hklsxx_tab": elem.tab_6_css,
+                     "tsxx_tab": elem.tab_7_css,
+                     "dbxx_div": elem.page_2,
+                     "jkrxx_div": elem.page_3,
+                     "zhxx_div": elem.page_4,
+                     "hkxx_div": elem.page_5,
+                     "hklsxx_div": elem.page_6,
+                     "tsxx_div": elem.page_7
+                     }
+        else:
+            page_dict = {"dbxx_tab": "",
+                         "jkrxx_tab": elem.tab_2_css,
+                         "zhxx_tab": elem.tab_3_css,
+                         "hkxx_tab": elem.tab_4_css,
+                         "hklsxx_tab": elem.tab_5_css,
+                         "tsxx_tab": elem.tab_6_css,
+                         "dbxx_div": "",
+                         "jkrxx_div": elem.page_2,
+                         "zhxx_div": elem.page_3,
+                         "hkxx_div": elem.page_4,
+                         "hklsxx_div": elem.page_5,
+                         "tsxx_div": elem.page_6
+                         }
+        return page_dict
+
+    def error_log(self, driver, elem, person_info, log_info):
+        driver.find_element_by_css_selector(elem.return_btn_css).click()
+        print u"业务号：" + person_info.hth + u"，借款人：" + person_info.jkrmc +"," + log_info
 
     """
     def data_is_refresh(self, driver, tool):

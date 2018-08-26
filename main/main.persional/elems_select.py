@@ -20,7 +20,7 @@ class Elems(object):
         self.query_btn_id = "button-1570-btnEl"  # 查询按钮
         # 切换到 iframe
         self.iframe_css = "#panel-1058>#panel-1058-body>iframe"
-        self.loading_id = "loadmask-1902"  # loading幕布，点击查询后才有 display属性是在style里
+        self.loading_css = "#loadmask-1902"  # loading幕布，点击查询后才有 display属性是在style里
         # 数据行
         self.data_tr_css = "#gridview-1848>table>tbody>tr"  # 数据行
         self.data_tr_hth_css = "#gridview-1848>table>tbody>tr:nth-child(2)>td:nth-child(5)>div"  # 数据行中业务号
@@ -48,6 +48,7 @@ class Elems(object):
                          "div:nth-child(7)>em>button>span:nth-child(1)"
 
         # 贷款业务信息页面中的page 共七个
+        self.page_parent = "#p2-body>div>div:nth-child(3)>div"  # 用来判断几个div加载
         self.page_1 = "#p2-body>div>div:nth-child(3)>div:nth-child(1)"
         self.page_2 = "#p2-body>div>div:nth-child(3)>div:nth-child(2)"
         self.page_3 = "#p2-body>div>div:nth-child(3)>div:nth-child(3)"
@@ -56,9 +57,30 @@ class Elems(object):
         self.page_6 = "#p2-body>div>div:nth-child(3)>div:nth-child(6)"
         self.page_7 = "#p2-body>div>div:nth-child(3)>div:nth-child(7)"
 
-        #开户信息页面
+        # 基于page1234567下查找各自页面下一步
+        self.next_btn_css = "div>div>div:nth-child(2)>div>div>div:nth-child(2)>em>button"    # 其他下一步
+        self.next_btn_jkrxx_css = "div>div>div:nth-child(2)>div>div>div:nth-child(3)>em>button"  # 借款人信息下一步  多了一个重置
+        # 开户信息页面
         # self.ffr = "#p2-body>div>div:nth-child(3)>div>div>div>div:nth-child(1)>table>tbody:nth-child(3)" \
         #            ">tr>td>div>div>div:nth-child(1)>div:nth-child(1)>div>table>tbody>tr>td:nth-child(2)>div"
         self.ffr_id = "displayfield-1632-inputEl"  # 直接text
         self.dqr_id = "datefield-1633-inputEl"  # getAtrribute得到style,再切片
+
+        self.khr_scc = "#accountModifyForm-formTable>tbody:nth-child(1)>tr>td>div>div>div:nth-child(1)>" \
+                       "div:nth-child(1)>div>table>tbody>tr>td:nth-child(2)>table>" \
+                       "tbody>tr>td:nth-child(1)>input"    # 结算应还款日
+        self.ye_css = "#accountModifyForm-formTable>tbody:nth-child(1)>tr>td>div>div>div:nth-child(1)>" \
+                      "div:nth-child(2)>div>table>tbody>tr>td>div>div>table>tbody:nth-child(1)" \
+                      ">tr>td>div>div>div:nth-child(1)>div>div>table>tbody>tr>td:nth-child(2)>input"  # 余额
+
+        self.wjfl = "#accountModifyForm-formTable>tbody:nth-child(2)>tr>td>div>div>div:nth-child(1)>div:nth-child(1)>div>table>tbody>tr>td:nth-child(2)>table>tbody>tr>td:nth-child(1)>input"  # 五级分类
+
+        self.zhzt = "#accountModifyForm-formTable>tbody:nth-child(2)>tr>td>div>div>div:nth-child(1)>div:nth-child(2)>div>table>tbody>tr>td:nth-child(2)>table>tbody>tr>td:nth-child(1)>input"  # 账户状态
+
+        self.flag_divs_css = "html>body>div"
+        self.wjfl_option_div_css = "html>body>div:nth-child(12)"
+        self.zhzt_option_div_css = "html>body>div:nth-child(13)"
+        self.byjs_btn_css = "div:nth-child(2)>div>div>div>div:nth-child(2)>div>div>div:nth-child(3)>em>button"  # 本月结算   相对于flag_option_div_css
+
+        self.return_btn_css = "#p2>div:nth-child(1)>div>div>div>em>button"
 
