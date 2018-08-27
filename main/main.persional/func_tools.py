@@ -15,9 +15,9 @@ import sys
 class CreditFunc:
     def __init__(self):
         # 登录参数
-        self.user_name = "shy-jphshczhyh-lyw"
-        self.password = "czyh2017"
-        self.url = "https://msi.pbccrc.org.cn/html/login.html"
+        self.user_name = ""
+        self.password = ""
+        self.url = ""
         self.current_date = "2018-07-31"
         self.time_out = 30
         # 表格参数
